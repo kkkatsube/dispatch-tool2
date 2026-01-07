@@ -15,6 +15,7 @@ function onOpen(): void {
 /**
  * Triggered when a cell is edited
  * Handles checkbox changes in column J to update text colors in columns H and I
+ * Optimized to minimize API calls for faster performance
  */
 function onEdit(e: GoogleAppsScript.Events.SheetsOnEdit): void {
   const range = e.range;
@@ -34,28 +35,24 @@ function onEdit(e: GoogleAppsScript.Events.SheetsOnEdit): void {
   // true (checked) → red, false (unchecked) → white
   const color = value === true ? '#ff0000' : '#ffffff';
 
-  // Update colors for H and I columns in the current row and one row above
-  updateRowColors(sheet, row, color);
+  // Calculate the range to update
+  // If row > 1, update current row and row above (2 rows)
+  // If row = 1, update only current row (1 row)
+  const startRow = row > 1 ? row - 1 : row;
+  const numRows = row > 1 ? 2 : 1;
 
-  // Update the row above if it's not the first row
-  if (row > 1) {
-    updateRowColors(sheet, row - 1, color);
+  // Update colors for H and I columns (columns 8-9) in a single API call
+  // Get the range covering both columns and both rows
+  const targetRange = sheet.getRange(startRow, 8, numRows, 2);
+
+  // Create color array: all cells get the same color
+  const colors: string[][] = [];
+  for (let i = 0; i < numRows; i++) {
+    colors.push([color, color]);
   }
-}
 
-/**
- * Update text color for columns H and I in the specified row
- */
-function updateRowColors(
-  sheet: GoogleAppsScript.Spreadsheet.Sheet,
-  row: number,
-  color: string
-): void {
-  // Column H (column 8)
-  sheet.getRange(row, 8).setFontColor(color);
-
-  // Column I (column 9)
-  sheet.getRange(row, 9).setFontColor(color);
+  // Set all colors in one API call for better performance
+  targetRange.setFontColors(colors);
 }
 
 /**

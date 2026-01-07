@@ -18,20 +18,24 @@ npx clasp login
 
 ### 3. Link to Your Spreadsheet
 
-Option A: Create a new Apps Script project
+Create `.clasp.json` with the script ID:
+
 ```bash
-npx clasp create --type sheets --title "Dispatch Tool 2" --rootDir ./dist
+cat > .clasp.json << 'EOF'
+{
+  "scriptId": "1T-pxVj5EdZRum_tWgFDMDH9fZssLCvaEx69nJZHFGdZH49bqqXEjvvAL",
+  "rootDir": "./dist"
+}
+EOF
 ```
 
-Option B: Use existing script (if you already have a script bound to your spreadsheet)
-1. Open your spreadsheet: https://docs.google.com/spreadsheets/d/1H4aeFXZmo-eQs8rBJbAmAPCVqKx5CdcRbWMc6IoIbog/edit
-2. Go to Extensions > Apps Script
-3. Copy the Script ID from the URL (format: `https://script.google.com/.../.../projects/{SCRIPT_ID}/edit`)
-4. Create `.clasp.json` from template:
-```bash
-cp .clasp.json.template .clasp.json
+Or manually create `.clasp.json` with the following content:
+```json
+{
+  "scriptId": "1T-pxVj5EdZRum_tWgFDMDH9fZssLCvaEx69nJZHFGdZH49bqqXEjvvAL",
+  "rootDir": "./dist"
+}
 ```
-5. Edit `.clasp.json` and replace `YOUR_SCRIPT_ID_HERE` with your actual Script ID
 
 ### 4. Build and Deploy
 
@@ -77,9 +81,11 @@ dispatch-tool2/
 └── package.json      # Node.js dependencies
 ```
 
-## Spreadsheet ID
+## Project IDs
 
-Current spreadsheet: `1H4aeFXZmo-eQs8rBJbAmAPCVqKx5CdcRbWMc6IoIbog`
+- **Spreadsheet ID**: `1H4aeFXZmo-eQs8rBJbAmAPCVqKx5CdcRbWMc6IoIbog`
+- **Script ID**: `1T-pxVj5EdZRum_tWgFDMDH9fZssLCvaEx69nJZHFGdZH49bqqXEjvvAL`
+- **Spreadsheet URL**: https://docs.google.com/spreadsheets/d/1H4aeFXZmo-eQs8rBJbAmAPCVqKx5CdcRbWMc6IoIbog/edit
 
 ## Scripts
 

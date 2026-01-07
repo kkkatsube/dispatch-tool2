@@ -4,8 +4,9 @@ node_modules/
 # Build output
 dist/
 
-# clasp credentials (never commit!)
+# clasp credentials and config (never commit!)
 .clasprc.json
+.clasp.json
 
 # macOS
 .DS_Store

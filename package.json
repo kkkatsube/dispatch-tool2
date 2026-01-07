@@ -4,10 +4,10 @@
   "description": "Google Sheets dispatch tool with TypeScript and clasp",
   "main": "dist/Code.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp appsscript.json dist/",
     "watch": "tsc --watch",
-    "push": "npm run build && clasp push",
-    "deploy": "npm run build && clasp push && clasp deploy",
+    "push": "npm run build && clasp push --force",
+    "deploy": "npm run build && clasp push --force && clasp deploy",
     "open": "clasp open"
   },
   "keywords": [
